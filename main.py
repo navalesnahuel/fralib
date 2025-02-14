@@ -1,7 +1,6 @@
 from urllib.parse import quote_plus
 
 import requests
-import uvicorn
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify, request
 
@@ -51,7 +50,7 @@ def scrape_fravega(code):
 
 
 # Endpoint to call scrape_fravega with product code
-@app.route("/scrape", methods=["GET"])
+@app.route("/", methods=["GET"])
 def scrape():
     # Get the 'code' from the query parameter
     code = request.args.get("code", None)
@@ -67,4 +66,4 @@ def scrape():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+    app.run()
