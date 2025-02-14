@@ -1,6 +1,7 @@
 from urllib.parse import quote_plus
 
 import requests
+import uvicorn
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify, request
 
@@ -66,5 +67,4 @@ def scrape():
 
 
 if __name__ == "__main__":
-    # Run the Flask app
-    app.run(debug=True)
+    uvicorn.run(app, host="0.0.0.0", port=10000)
