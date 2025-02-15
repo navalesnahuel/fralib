@@ -69,5 +69,10 @@ def scrape():
     return jsonify(product_data)
 
 
+@app.route("/health", methods=["GET"])
+def healthcheck():
+    return jsonify({"status": "ok"}), 200
+
+
 if __name__ == "__main__":
     app.run()
