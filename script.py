@@ -2,9 +2,6 @@ from urllib.parse import quote_plus
 
 import requests
 from bs4 import BeautifulSoup
-from flask import Flask, jsonify, request
-
-app = Flask(__name__)
 
 
 def scrape_fravega(code):
@@ -37,13 +34,12 @@ def scrape_fravega(code):
     search_query = quote_plus(brand + " " + product_name)
     search_query_d = brand + " " + product_name
 
-    prices_int = [
-        float(s.replace("$", "").replace(".", "").replace(",", ".")) for s in prices
-    ]
-
     ml_search_url = (
         f"https://listado.mercadolibre.com.ar/{search_query}#D[A:{search_query_d}]"
     )
+    prices_int = [
+        float(s.replace("$", "").replace(".", "").replace(",", ".")) for s in prices
+    ]
 
     return {
         "Product Name": product_name,
@@ -53,21 +49,6 @@ def scrape_fravega(code):
     }
 
 
-# Endpoint to call scrape_fravega with product code
-@app.route("/", methods=["GET"])
-def scrape():
-    # Get the 'code' from the query parameter
-    code = request.args.get("code", None)
-
-    if not code:
-        return jsonify({"error": "Product code is required"}), 400
-
-    # Call the scrape function
-    product_data = scrape_fravega(code)
-
-    # Return the scraped data as JSON
-    return jsonify(product_data)
-
-
 if __name__ == "__main__":
-    app.run()
+    scrape_fravega("20027482")
+    print(scrape_fravega("20027482"))
